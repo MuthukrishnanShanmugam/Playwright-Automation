@@ -6,7 +6,7 @@ const { get } = require("http");
 
 test('Login test', async ({ page })=>{
 
-    const email = "krish19296@gmail.com";
+    const email = "Test123@gmail.com";
     const password = "Test1234";
     // const context = await browser.contexts();
     // const page = await context.newPage();
@@ -63,8 +63,8 @@ test('Login test', async ({ page })=>{
     const getTable = await page.locator('tbody tr');
 
     for(let i  =0; i<getTable.count(); i++) {
-        const getCell = await getTable  .nth(i).textContent();
-        console.log("test01", getCell);
+        const getCell = await getTable.nth(i).locator('th').textContent();
+        if(orderId.includes(getCell))
     } 
 })
 
