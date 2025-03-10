@@ -6,7 +6,7 @@ const { get } = require("http");
 
 test('Login test', async ({ page })=>{
 
-    const email = "Test123@gmail.com";
+    const email = "krish19296@gmail.com";
     const password = "Test1234";
     // const context = await browser.contexts();
     // const page = await context.newPage();
@@ -57,15 +57,24 @@ test('Login test', async ({ page })=>{
 
     const getOrderId = await page.locator('.em-spacer-1 .ng-star-inserted').textContent();
     const orderId = getOrderId.split('|')[1];
+    console.log("test1", orderId);
     
     await page.locator('[routerlink*="myorders"]').first().click();
-
+    await page.locator('tbody').waitFor();
     const getTable = await page.locator('tbody tr');
 
-    for(let i  =0; i<getTable.count(); i++) {
+    for(let i =0; i< await getTable.count(); ++i) {
         const getCell = await getTable.nth(i).locator('th').textContent();
-        if(orderId.includes(getCell))
+        if(orderId.includes(getCell)) {
+            await getTable.nth(i).locator('button').first().click();
+            break;
+        };
     } 
+    let getOrderIdFromViewOrders = await page.locator('.col-text').textContent();
+    // console.log("test2", getOrderIdFromViewOrders); 
+    // getOrderIdFromViewOrders = getOrderIdFromViewOrders;
+    console.log("test3", getOrderIdFromViewOrders);
+    expect(getOrderId.includes(getOrderIdFromViewOrders)).toBeTruthy();
 })
 
 
